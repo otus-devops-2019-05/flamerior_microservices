@@ -1,0 +1,30 @@
+{
+  "variables": {
+    "zone": "europe-wes1-b",
+    "machine_type": "f1-micro"
+  },
+  "builders": [
+    {
+      "type": "googlecompute",
+      "project_id": "{{ user `project_id` }}",
+      "image_name": "reddit-app-base-docker-{{timestamp}}",
+      "image_family": "reddit-app-docker-base",
+      "source_image_family": "{{ user `source_image_family` }}",
+      "zone": "europe-west1-b",
+      "ssh_username": "appuser",
+      "machine_type": "{{ user `machine_type` }}",
+      "disk_size": 10,
+      "disk_type": "pd-standard",
+      "image_description": "Custom image with ruby and mongo",
+      "tags": ["packer-ssh"],
+      "network": "default"
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "ansible",
+      "playbook_file": "ansible/playbooks/packer_docker.yml"
+
+    }
+  ]
+}
