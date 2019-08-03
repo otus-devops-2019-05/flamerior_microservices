@@ -1,0 +1,10 @@
+---
+- name: Check && install python
+  hosts: all
+  become: true
+  gather_facts: False
+
+  tasks:
+    - name: Install python for Ansible
+      raw: (apt -y update && apt install -y python python-setuptools python-pip build-essential libssl-dev libffi-dev python-dev python-pip)
+      changed_when: False

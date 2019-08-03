@@ -1,0 +1,3 @@
+"${name}": {
+        "ansible_host": "${ip}"
+      }

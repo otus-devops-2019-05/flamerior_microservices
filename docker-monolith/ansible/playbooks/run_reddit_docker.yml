@@ -1,0 +1,15 @@
+---
+- hosts: all
+  vars_files:
+    - "../hub_credentials.yml"
+  tasks:
+  - name: login dockerhub
+    docker_login:
+      username: "{{ hub_user }}"
+      password: "{{ hub_pass }}"
+  - name: start a container
+    docker_container:
+      name: reddit
+      image: flamerior/otus-reddit:1.0
+      ports:
+        - "80:9292"

@@ -1,0 +1,6 @@
+---
+- hosts: empty
+  become: true
+  tasks:
+    - name: install docker
+      import_tasks: install_docker_tasks.yml
