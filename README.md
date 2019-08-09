@@ -43,3 +43,11 @@ flamerior/comment                                       1.0                 154M
 подключил volume для базы
 
 заодно разобрался с форматированием вывода команд докера
+```docker images --format 'table {{.Repository}}\t{{.Tag}}\t{{.Size}} ' -f "reference=flamerior/*:*"```
+
+##13)
+поэксперементировал с сетями 
+реализовал docker-compose и docker-compose.override 
+проверил что доступно изменение кода без перезапуска
+сменил префикс
+приложение доступно на 80 м порту после docker-compose up -d
