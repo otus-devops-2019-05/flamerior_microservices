@@ -4,16 +4,16 @@ variable public_key_path {
 variable zone {
   description = "Zone"
 }
+variable tag {
+  description = "tag"
+}
+variable machine_type {
+  description = "machine type"
+}
 variable app_disk_image {
   description = "Disk image for reddit app"
 }
-variable "db_address" {
-  description = "address of db"
-}
-
 variable "network" {}
 variable "app_ip" {}
 
 variable "private_key" {}
-variable "autodeploy" {
-}

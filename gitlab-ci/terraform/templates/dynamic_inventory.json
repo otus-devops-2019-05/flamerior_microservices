@@ -1,20 +1,18 @@
 {
   "_meta": {
     "hostvars": {
-      "appserver": {
+      "gitlab_core": {
         "ansible_host": "${app_ext_ip}"
       },
       "dbserver": {
-        "ansible_host": "${db_ext_ip}"
       }
     }
   },
   "app": {
     "hosts": [
-      "appserver"
+      "gitlab_core"
     ],
     "vars": {
-      "db_int_ip": "${db_int_ip}"
     }
   },
   "db": {

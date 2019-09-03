@@ -1,8 +1,8 @@
 resource "google_compute_instance" "app" {
-  name = "reddit-app"
-  machine_type = "g1-small"
+  name = "gitlab-core"
+  machine_type = "${var.machine_type}"
   zone = "${var.zone}"
-  tags = ["reddit-app"]
+  tags = ["${var.tag}"]
   boot_disk {
     initialize_params { image = "${var.app_disk_image}" }
   }
@@ -15,19 +15,6 @@ resource "google_compute_instance" "app" {
 
   metadata {
     ssh-keys = "appuser:${file(var.public_key_path)}"
-  }
-
-}
-
-locals {
-  autodeploy="sh ./deploy.sh"
-  info="echo 'to deploy run \n sh deploy.sh' >> ~/README"
-}
-
-resource "template_file" "puma_service" {
-  template = "${file("${path.module}/files/puma.tpl")}"
-  vars = {
-    db_ip="${var.db_address}"
   }
 
 }

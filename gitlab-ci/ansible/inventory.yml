@@ -1,7 +1,7 @@
 app:
   hosts:
     gitlab_core:
-      ansible_host: ${app_ext_ip}
+      ansible_host: 35.233.4.81
   vars:
 db:
   hosts:
