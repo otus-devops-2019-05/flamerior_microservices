@@ -1,0 +1,27 @@
+---
+- hosts: all
+  become: true
+  vars_files: creds.yml
+  roles:
+    - role: marvinpinto.docker
+      tags: docker
+      become: true
+
+    - role: riemers.gitlab-runner
+      tags: runner
+      vars:
+        gitlab_runner_registration_token: "{{ runner_token }}"
+        gitlab_runner_coordinator_url: "{{ gitlab_url }}"
+        gitlab_runner_runners:
+          - name: "runner-{{ ansible_hostname }}"
+            executor: docker
+            docker_image: 'alpine'
+            tags:
+              - remote_docker
+            docker_volumes:
+              - "/var/run/docker.sock:/var/run/docker.sock"
+              - "/cache"
+            extra_configs:
+              runners.docker:
+                memory: 512m
+                # allowed_images: ["ruby:*", "python:*", "php:*"]

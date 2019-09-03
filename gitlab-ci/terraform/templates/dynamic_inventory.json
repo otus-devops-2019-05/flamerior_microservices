@@ -1,0 +1,25 @@
+{
+  "_meta": {
+    "hostvars": {
+      "appserver": {
+        "ansible_host": "${app_ext_ip}"
+      },
+      "dbserver": {
+        "ansible_host": "${db_ext_ip}"
+      }
+    }
+  },
+  "app": {
+    "hosts": [
+      "appserver"
+    ],
+    "vars": {
+      "db_int_ip": "${db_int_ip}"
+    }
+  },
+  "db": {
+    "hosts": [
+      "dbserver"
+    ]
+  }
+}
