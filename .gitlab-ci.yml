@@ -49,6 +49,7 @@ deploy_dev_job:
 branch review:
   stage: review
   before_script:
+    - eval $(ssh-agent -s)
     - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
   script: echo "Deploy to $CI_ENVIRONMENT_SLUG"
   environment:
