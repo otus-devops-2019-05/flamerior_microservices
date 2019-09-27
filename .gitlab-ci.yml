@@ -48,6 +48,8 @@ deploy_dev_job:
 
 branch review:
   stage: review
+  before_script:
+    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
   script: echo "Deploy to $CI_ENVIRONMENT_SLUG"
   environment:
     name: branch/$CI_COMMIT_REF_NAME
