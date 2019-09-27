@@ -12,6 +12,7 @@ variables:
 before_script:
   - cd reddit
   - bundle install
+  - '[[ -f /.dockerenv ]]'
 
 build_job:
   stage: build
