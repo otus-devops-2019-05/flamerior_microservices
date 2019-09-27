@@ -14,6 +14,7 @@ variable app_disk_image {
   description = "Disk image for reddit app"
 }
 variable "network" {}
-variable "app_ip" {}
-
+variable "count" {
+  default = 1
+}
 variable "private_key" {}

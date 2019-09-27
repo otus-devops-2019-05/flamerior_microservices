@@ -1,8 +1,12 @@
-app:
+core:
   hosts:
     gitlab_core:
-      ansible_host: ${app_ext_ip}
-  vars:
-db:
+      ansible_host: ${core_ext_ip}
+stages:
   hosts:
-    dbserver:
+    dev_stage:
+      ansible_host: ${dev_ext_ip}
+runners:
+  hosts:
+${runners_hosts}
+  vars:

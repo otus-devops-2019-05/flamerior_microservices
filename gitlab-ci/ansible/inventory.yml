@@ -1,8 +1,17 @@
-app:
+core:
   hosts:
     gitlab_core:
-      ansible_host: 35.233.4.81
-  vars:
-db:
+      ansible_host: 104.199.45.197
+stages:
   hosts:
-    dbserver:
+    dev_stage:
+      ansible_host: 35.241.221.176
+runners:
+  hosts:
+    runner-0:
+      ansible_host: 34.77.212.107
+    runner-1:
+      ansible_host: 35.189.234.221
+    runner-2:
+      ansible_host: 35.187.36.217
+

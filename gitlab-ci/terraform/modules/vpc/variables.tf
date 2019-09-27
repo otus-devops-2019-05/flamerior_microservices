@@ -1,7 +1,4 @@
 
-variable source_ranges {
-  description = "Allowed IP addresses"
+variable tags {
   type = "list"
 }
-variable "app_ip" {}
-variable "region" {}
