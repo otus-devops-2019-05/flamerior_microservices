@@ -15,13 +15,13 @@
         gitlab_runner_coordinator_url: "{{ gitlab_url }}"
         gitlab_runner_runners:
           - name: "{{ ansible_hostname }}"
-            executor: docker
-            docker_image: 'alpine'
-            tags:
-              - remote_docker
-            docker_volumes:
-              - "/var/run/docker.sock:/var/run/docker.sock"
-              - "/cache"
+            executor: 'shell'
+#            docker_image: 'alpine'
+#            tags:
+#              - remote_docker
+#            docker_volumes:
+#              - "/var/run/docker.sock:/var/run/docker.sock"
+#              - "/cache"
             extra_configs:
               runners.docker:
                 memory: 512m
