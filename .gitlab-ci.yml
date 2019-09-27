@@ -12,12 +12,11 @@ variables:
 before_script:
   - cd reddit
   - bundle install
-  - '[[ -f /.dockerenv ]]'
 
 build_job:
   stage: build
   before_script:
-    - echo $REGISTRY_PASSWORD | docker login -u $REGISTRY_USER --password-stdin docker.io
+    - echo $REGISTRY_PASSWORD | sudo docker login -u $REGISTRY_USER --password-stdin docker.io
   script:
     - echo 'Building'
     - docker build -t flamerior/reddit:$CI_JOB_ID .
