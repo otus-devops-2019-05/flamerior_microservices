@@ -19,7 +19,6 @@ build_job:
     - echo $REGISTRY_PASSWORD | docker login -u $REGISTRY_USER --password-stdin docker.io
   script:
     - echo 'Building'
-    - cd src
     - docker build -t flamerior/reddit:$CI_JOB_ID .
     - docker tag flamerior/reddit:$CI_JOB_ID flamerior/reddit:latest
     - docker push flamerior/reddit:$CI_JOB_ID
