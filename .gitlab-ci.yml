@@ -30,7 +30,7 @@ test_unit_job:
     - mongo:latest
   script:
     - docker-compose up -d
-    - docker exec appuser_reddit_1 bash -c 'cd /reddit && ruby simpletest.rb'
+    - docker exec example_reddit_1 bash -c 'cd /reddit && ruby simpletest.rb'
     - docker-compose down
 
 test_integration_job:
