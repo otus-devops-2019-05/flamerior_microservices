@@ -9,7 +9,8 @@ stages:
 
 variables:
   DATABASE_URL: 'mongodb://mongo/user_posts'
-#before_script:
+before_script:
+  - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
 #  - cd reddit
 #  - bundle install
 
