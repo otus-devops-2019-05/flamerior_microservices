@@ -40,11 +40,9 @@ test_integration_job:
 
 deploy_dev_job:
   stage: review
-  before_script:
+  script:
     - eval $(ssh-agent -s)
     - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
-
-  script:
     - echo 'Deploy'
     - scp docker-compose.yml appuser@35.241.221.176:/home/appuser
     - ssh appuser@35.241.221.176 "sudo docker-compose down && sudo docker-compose up -d"
