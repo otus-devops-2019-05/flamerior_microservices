@@ -40,17 +40,22 @@ test_integration_job:
 
 deploy_dev_job:
   stage: review
-  script:
-    - echo 'Deploy'
-  environment:
-    name: dev
-    url: http://dev.example.com
-
-branch review:
-  stage: review
   before_script:
     - eval $(ssh-agent -s)
     - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
+
+  script:
+    - echo 'Deploy'
+    - scp docker-compose.yml appuser@35.241.221.176:/home/appuser
+    - ssh appuser@35.241.221.176 "sudo docker-compose down && sudo docker-compose up -d"
+
+  environment:
+    name: dev
+    url: http://35.241.221.176
+
+branch review:
+  stage: review
+
   script: echo "Deploy to $CI_ENVIRONMENT_SLUG"
   environment:
     name: branch/$CI_COMMIT_REF_NAME
