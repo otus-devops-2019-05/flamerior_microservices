@@ -1,0 +1,3 @@
+runner_token: "токен"
+gitlab_url: "http://104.199.45.197/"
+docker__users: ["appuser", "gitlab-runner", "ubuntu"]

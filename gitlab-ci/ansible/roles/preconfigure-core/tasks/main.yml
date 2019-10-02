@@ -1,0 +1,29 @@
+---
+# tasks file for preconfigure-core
+
+- name: create dir for config
+  file:
+    dest: /srv/gitlab/config
+    state: directory
+
+- name: create dir for data
+  file:
+    dest: /srv/gitlab/data
+    state: directory
+
+- name: create dir for config
+  file:
+    dest: /srv/gitlab/data
+    state: directory
+
+- name: create docker-compose
+  template:
+    src: docker-compose.yml.j2
+    dest: /srv/gitlab/docker-compose.yml
+
+#- name: Download docker-compose
+#  get_url:
+#    url: https://github.com/docker/compose/releases/download/1.24.1/docker-compose-Linux-x86_64
+#    dest: /usr/local/bin/docker-compose
+#- name: Changing perm of "docker-compose", adding "+x"
+#  file: dest=/usr/local/bin/docker-compose mode=a+x

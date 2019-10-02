@@ -1,0 +1,6 @@
+version: '2'
+services:
+  reddit:
+    image: flamerior/reddit:latest
+    ports:
+      - 9292:9292

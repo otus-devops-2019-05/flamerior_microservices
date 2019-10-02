@@ -1,0 +1,89 @@
+image: ruby:2.4.2
+
+stages:
+  - build
+  - test
+  - review
+  - stage
+  - production
+
+variables:
+  DATABASE_URL: 'mongodb://mongo/user_posts'
+before_script:
+  - mkdir -p ~/.ssh
+  - chmod 700 ~/.ssh
+  - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
+#  - cd reddit
+#  - bundle install
+
+build_job:
+  stage: build
+  before_script:
+    - echo $REGISTRY_PASSWORD | docker login -u $REGISTRY_USER --password-stdin docker.io
+  script:
+    - echo 'Building'
+    - docker build -t flamerior/reddit:$CI_JOB_ID .
+    - docker tag flamerior/reddit:$CI_JOB_ID flamerior/reddit:latest
+    - docker push flamerior/reddit:$CI_JOB_ID
+    - docker push flamerior/reddit:latest
+
+test_unit_job:
+  stage: test
+  services:
+    - mongo:latest
+  script:
+    - docker-compose up -d
+    - docker exec example_reddit_1 bash -c 'cd /reddit && ruby simpletest.rb'
+    - docker-compose down
+
+test_integration_job:
+  stage: test
+  script:
+    - echo 'Testing 2'
+
+deploy_dev_job:
+  stage: review
+  script:
+    - eval $(ssh-agent -s)
+    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
+    - echo 'Deploy'
+    - scp docker-compose.yml appuser@35.241.221.176:/home/appuser
+    - ssh appuser@35.241.221.176 "sudo docker-compose down && sudo docker-compose up -d"
+
+  environment:
+    name: dev
+    url: http://35.241.221.176
+
+branch review:
+  stage: review
+
+  script: echo "Deploy to $CI_ENVIRONMENT_SLUG"
+  environment:
+    name: branch/$CI_COMMIT_REF_NAME
+    url: http://$CI_ENVIRONMENT_SLUG.example.com
+  only:
+    - branches
+  except:
+    - master
+
+staging:
+  stage: stage
+  when: manual
+  only:
+    - /^\d+\.\d+\.\d+/
+  script:
+    - echo 'Deploy'
+  environment:
+    name: stage
+    url: https://beta.example.com
+
+production:
+  stage: production
+  when: manual
+  only:
+    - /^\d+\.\d+\.\d+/
+  script:
+    - echo 'Deploy'
+  environment:
+    name: production
+    url: https://example.com

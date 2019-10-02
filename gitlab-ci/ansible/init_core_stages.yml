@@ -1,0 +1,14 @@
+---
+- hosts: core
+  become: true
+  roles:
+    - role: "nickjj.docker"
+      tags: ["docker"]
+    - role: preconfigure-core
+
+- hosts: stages
+  become: true
+  roles:
+    - role: "nickjj.docker"
+      tags: ["docker"]
+
