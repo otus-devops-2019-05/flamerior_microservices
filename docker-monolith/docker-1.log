@@ -1,6 +1,0 @@
-REPOSITORY                  TAG                 IMAGE ID            CREATED             SIZE
-flamerior/ubuntu-tmp-file   latest              88753510a298        3 minutes ago       120MB
-<none>                      <none>              d0f1437e2d79        3 minutes ago       120MB
-portainer/portainer         latest              2b4ddf654e1c        5 days ago          77.7MB
-ubuntu                      16.04               5e13f8dd4c1a        8 days ago          120MB
-hello-world                 latest              fce289e99eb9        7 months ago        1.84kB

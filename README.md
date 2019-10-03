@@ -58,3 +58,23 @@ flamerior/comment                                       1.0                 154M
 ансиблом раскатывается докер и настраиваются ранеры (сначала необходимо задействовать инициализацию гитлаба, а уже потом ввести токен и ип для инициализации ранеров)
 настроил пайплайн для запуска теста в докере на ранере и для деплоя на дев сервер
 использовал переменные среды гитлаба для хранения логина пароля докер хаба и приватного ключа доступа к дев серверу
+
+
+##15)
+- запустил prometheus и настроил докерфайл
+- помучал метрики 
+- написал композ и добавил в него сервисы и экспортеры
+- подключил percona/mongodb-exporter
+
+```
+git clone https://github.com/percona/mongodb_exporter.git
+cd mongodb_exporter/
+make docker
+docker tag mongodb-exporter:master flamerior/mongodb-exporter
+docker push flamerior/mongodb-exporter
+```
+
+- подключил blackbox-exporter
+- написал Makefile (хелп парсится из самого файла и используется форматирование с цветом)
+- запушил образы
+https://cloud.docker.com/u/flamerior/repository/list
