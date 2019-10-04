@@ -3,19 +3,27 @@ DOCKER_REPO_PASS=.creds
 APP_DIR=src
 MONITORING_DIR=monitoring
 
-APPS = comment post ui blackbox-exporter prometheus
+APPS = comment post ui blackbox-exporter prometheus alertmanager grafana telegraf trickster
 
 COMMENT_PATH = $(APP_DIR)/comment
 POST_PATH = $(APP_DIR)/post-py
 UI_PATH = $(APP_DIR)/ui
 BLACKBOX_EXPORTER_PATH = $(MONITORING_DIR)/blackbox-exporter
 PROMETHEUS_PATH = $(MONITORING_DIR)/prometheus
+GRAFANA_PATH = $(MONITORING_DIR)/grafana
+ALERTMANAGER_PATH = $(MONITORING_DIR)/alertmanager
+TELEGRAF_PATH = $(MONITORING_DIR)/telegraf
+TRICKSTER_PATH = $(MONITORING_DIR)/trickster
 
 COMMENT_PRE = $(shell echo $(shell find $(COMMENT_PATH) -type f))
 POST_PRE = $(shell echo $(shell find $(POST_PATH) -type f))
 UI_PRE = $(shell echo $(shell find $(UI_PATH) -type f))
 BLACKBOX_EXPORTER_PRE = $(shell echo $(shell find $(BLACKBOX_EXPORTER_PATH) -type f))
 PROMETHEUS_PRE = $(shell echo $(shell find $(PROMETHEUS_PATH) -type f))
+GRAFANA_PRE = $(shell echo $(shell find $(GRAFANA_PATH) -type f))
+ALERTMANAGER_PRE = $(shell echo $(shell find $(ALERTMANAGER_PATH) -type f))
+TELEGRAF_PRE = $(shell echo $(shell find $(TELEGRAF_PATH) -type f))
+TRICKSTER_PRE = $(shell echo $(shell find $(TRICKSTER_PATH) -type f))
 
 # HELP
 # This will output the help for each task
@@ -27,7 +35,7 @@ help: ## This help.
 
 # DOCKER
 # Build images
-build: build-comment build-post build-ui build-blackbox build-prometheus
+build: build-comment build-post build-ui build-blackbox build-prometheus build-grafana build-alertmanager build-telegraf build-trickster
 
 ## Build docker images
 
@@ -42,6 +50,18 @@ build-ui: $(UI_PRE) ## Build ui image
 
 build-prometheus: $(PROMETHEUS_PRE) ## Build prometheus image
 	docker build -t $(DOCKER_LOGIN)/prometheus $(PROMETHEUS_PATH)
+
+build-grafana: $(GRAFANA_PRE) ## Build grafana image
+	docker build -t $(DOCKER_LOGIN)/grafana $(GRAFANA_PATH)
+
+build-alertmanager: $(ALERTMANAGER_PRE) ## Build alertmanager image
+	docker build -t $(DOCKER_LOGIN)/alertmanager $(ALERTMANAGER_PATH)
+
+build-telegraf: $(TELEGRAF_PRE) ## Build alertmanager image
+	docker build -t $(DOCKER_LOGIN)/telegraf $(TELEGRAF_PATH)
+
+build-trickster: $(TRICKSTER_PRE) ## Build alertmanager image
+	docker build -t $(DOCKER_LOGIN)/trickster $(TRICKSTER_PATH)
 
 build-blackbox: $(BLACKBOX_EXPORTER_PRE) ## Build blackbox-exporter image
 	docker build -t $(DOCKER_LOGIN)/blackbox-exporter $(BLACKBOX_EXPORTER_PATH)
