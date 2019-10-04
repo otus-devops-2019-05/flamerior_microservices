@@ -10,4 +10,5 @@ variables.json
 !docker-monolith/docker-1.log
 .terraform.tfstate.lock.info
 .env
+.creds
 ansible/vars.yml
