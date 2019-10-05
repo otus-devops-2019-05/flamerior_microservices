@@ -60,7 +60,7 @@ flamerior/comment                                       1.0                 154M
 использовал переменные среды гитлаба для хранения логина пароля докер хаба и приватного ключа доступа к дев серверу
 
 
-##15)
+## 15)
 - запустил prometheus и настроил докерфайл
 - помучал метрики 
 - написал композ и добавил в него сервисы и экспортеры
@@ -78,3 +78,39 @@ docker push flamerior/mongodb-exporter
 - написал Makefile (хелп парсится из самого файла и используется форматирование с цветом)
 - запушил образы
 https://cloud.docker.com/u/flamerior/repository/list
+
+## 16)
+- поднял графану 
+- поигрался с дашбордами
+- настроил подхватывание источников и дашбордов на старте
+- настроил alertmanager и поигрался с способами алертов (конфиги для почты выпилил)
+- помучал экспериментальные метрики
+```
+/etc/docker/daemon.json
+
+{
+     "metrics-addr" : "127.0.0.1:9323",
+     "experimental" : true
+   }
+```
+
+- помучал advisor
+- дополнил Makefile
+- подключил telegraf
+- помучал stackdriver
+
+
+```
+Install the Stackdriver Monitoring agent.
+
+curl -sSO https://dl.google.com/cloudagents/install-monitoring-agent.sh
+sudo bash install-monitoring-agent.sh
+
+Install the Stackdriver Logging agent.
+
+curl -sSO https://dl.google.com/cloudagents/install-logging-agent.sh
+sudo bash install-logging-agent.sh --structured
+```
+
+- подключил trickster
+- настроил простейший вариант autoheal для ui - пришлось добавить curl в контейнер чтобы работало

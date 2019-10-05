@@ -9,7 +9,7 @@ RUN mkdir $APP_HOME
 WORKDIR $APP_HOME
 ADD Gemfile* $APP_HOME/
 
-RUN  apk add --update build-base ruby-dev \
+RUN  apk add --update build-base ruby-dev curl \
     && bundle install \
     && apk del build-base ruby-dev
 

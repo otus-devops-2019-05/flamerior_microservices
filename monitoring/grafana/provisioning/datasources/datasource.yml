@@ -1,0 +1,36 @@
+# config file version
+apiVersion: 1
+
+# list of datasources to insert/update depending
+# whats available in the database
+datasources:
+  # <string, required> name of the datasource. Required
+- name: pr
+  # <string, required> datasource type. Required
+  type: prometheus
+  # <bool> mark as default datasource. Max one per org
+  isDefault: false
+  # <string, required> access mode. direct or proxy. Required
+  access: proxy
+  # <int> org id. will default to orgId 1 if not specified
+  orgId: 1
+  # <string> url
+  url: http://prometheus:9090
+  version: 1
+  # <bool> allow users to edit datasources from the UI.
+  editable: true
+
+- name: trickster
+  # <string, required> datasource type. Required
+  type: prometheus
+  # <bool> mark as default datasource. Max one per org
+  isDefault: true
+  # <string, required> access mode. direct or proxy. Required
+  access: proxy
+  # <int> org id. will default to orgId 1 if not specified
+  orgId: 1
+  # <string> url
+  url: http://trickster:9089
+  version: 1
+  # <bool> allow users to edit datasources from the UI.
+  editable: true
