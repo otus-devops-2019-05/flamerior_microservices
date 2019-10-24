@@ -2,6 +2,8 @@ version: '3.3'
 services:
   post_db:
     image: mongo:3.2
+    environment:
+      - ZIPKIN_ENABLED=${ZIPKIN_ENABLED}
     volumes:
       - post_db:/data/db
     networks:
@@ -16,23 +18,54 @@ services:
       - ${UI_PORT}:${UI_PORT}/tcp
     networks:
       - front_net
+    environment:
+      - ZIPKIN_ENABLED=${ZIPKIN_ENABLED}
+      - POST_SERVICE_HOST=post
+      - POST_SERVICE_PORT=5000
+      - COMMENT_SERVICE_HOST=comment
+      - COMMENT_SERVICE_PORT=9292
+    depends_on:
+      - post
     healthcheck:
       test: ["CMD", "curl", "-f", "http://ui:9292/healthcheck"]
       interval: 20s
       timeout: 10s
       retries: 3
+    logging:
+      driver: "fluentd"
+      options:
+        fluentd-address: localhost:24224
+        tag: service.ui
     labels:
       - "autoheal=true"
 
   post:
     # build: ./post-py
     image: ${GITHUB_NAME}/post:latest
+    environment:
+      - ZIPKIN_ENABLED=${ZIPKIN_ENABLED}
+      - POST_DATABASE_HOST=post_db
+      - POST_DATABASE=posts
     networks:
       - back_net
       - front_net
+    depends_on:
+      - post_db
+    ports:
+      - "5000:5000"
+    logging:
+      driver: "fluentd"
+      options:
+        fluentd-address: localhost:24224
+        tag: service.post
+
   comment:
     # build: ./comment
     image: ${GITHUB_NAME}/comment:latest
+    environment:
+      - ZIPKIN_ENABLED=${ZIPKIN_ENABLED}
+      - COMMENT_DATABASE_HOST=comment_db
+      - COMMENT_DATABASE=comment
     networks:
       - back_net
       - front_net
