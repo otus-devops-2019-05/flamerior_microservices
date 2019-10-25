@@ -124,3 +124,37 @@ sudo bash install-logging-agent.sh --structured
 - добавил grok шаблон для логов которые не парсились
 - настроил Zipkin
 - нашел ошибку в коде с помощью трейсинга - стояла задержка 3 секунды 
+
+
+## 18)
+- прошел The Hard Way
+- использовал tmux (для открытия 3х консолей на контроллеры использовать команду)
+```bash
+tmux new-session gcloud compute ssh controller-0 \; split-window -v gcloud compute ssh controller-1 \; split-window -v gcloud compute ssh controller-2 \; select-layout even-vertical \; attach-session
+```
+
+- попробовал kubespray на 5 дроплетах DO c небольшим применением бубна и метода научного тыка
+- завернул локальные шаги в баш, а удаленые в ансибл
+
+
+для создания кластера
+```
+cd kubernetes/ansible/
+./init_kuber.sh 
+ansible-playbook deploy_controllers.yml 
+./create_lb.sh 
+ansible-playbook deploy_workers.yml 
+./finish_install.sh 
+./test.sh 
+```
+
+для деплоя нашего приложения
+```
+kubectl apply -f ../reddit
+kubectl get all
+```
+
+для удаления кластера
+```
+./destroy.sh 
+```
