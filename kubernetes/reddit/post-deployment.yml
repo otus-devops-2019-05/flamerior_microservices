@@ -2,18 +2,27 @@
 apiVersion: apps/v1beta2
 kind: Deployment
 metadata:
-  name: post-deployment
+  name: post
+  labels:
+    app: reddit
+    component: post
+  namespace: dev
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
-      app: post
+      app: reddit
+      component: post
   template:
     metadata:
       name: post
       labels:
-        app: post
+        app: reddit
+        component: post
     spec:
       containers:
       - image: flamerior/post
         name: post
+        env:
+        - name: POST_DATABASE_HOST
+          value: post-db

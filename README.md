@@ -158,3 +158,26 @@ kubectl get all
 ```
 ./destroy.sh 
 ```
+
+
+##19)
+- поставил миникуб
+- создал кластер в GKE
+- создал кластер в GKE через терраформ
+- настроил приложение в кубере
+- настроил дашборд кубера
+
+```
+terraform apply
+``` 
+в папке терраформ
+
+```
+kubectl apply -f reddit/dev-namespace.yml 
+kubectl apply -f reddit
+kubectl apply -f dashboard
+kubectl proxy
+kubectl get nodes -o wide
+kubectl -n dev get services
+
+```
