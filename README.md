@@ -181,3 +181,19 @@ kubectl get nodes -o wide
 kubectl -n dev get services
 
 ```
+
+
+##20)
+- помучал kube-dns
+- настроил гугловый лоад балансер
+- настроил ingress
+- создал tls секрет
+- запретил http
+- *описал секрет в виде манифеста*
+- настроил NetworkPolicy
+- создал диск в gce
+- примонтировал
+- создал PersistentVolume
+- настроил PersistentVolumeClaim
+- создал StorageClass fast
+- подклчил его к монге
