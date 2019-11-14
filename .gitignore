@@ -12,3 +12,5 @@ variables.json
 .env
 .creds
 ansible/vars.yml
+Gitlab_ci
+*.lock
