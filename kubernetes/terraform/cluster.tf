@@ -1,7 +1,6 @@
 resource "google_container_cluster" "reddit_cluster" {
   name     = "reddit-cluster"
-  location = "us-central1"
-
+  location   = "us-central1-b"
   remove_default_node_pool = true
   initial_node_count       = 1
 
@@ -23,9 +22,9 @@ resource "google_container_cluster" "reddit_cluster" {
 
 resource "google_container_node_pool" "primary_preemptible_nodes" {
   name       = "my-node-pool"
-  location   = "us-central1"
+  location   = "us-central1-b"
   cluster    = "${google_container_cluster.reddit_cluster.name}"
-  node_count = 1
+  node_count = 2
 
   node_config {
     preemptible  = true
@@ -40,4 +39,15 @@ resource "google_container_node_pool" "primary_preemptible_nodes" {
       "https://www.googleapis.com/auth/monitoring",
     ]
   }
+}
+resource "google_compute_firewall" "k8s_firewall" {
+  name    = "allow-k8s-ui"
+  network = "default"
+
+  allow {
+    protocol = "tcp"
+    ports    = ["30000-32767"]
+  }
+
+  source_ranges = ["0.0.0.0/0"]
 }
