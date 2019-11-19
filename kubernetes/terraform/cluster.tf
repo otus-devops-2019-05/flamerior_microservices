@@ -20,15 +20,35 @@ resource "google_container_cluster" "reddit_cluster" {
   }
 }
 
-resource "google_container_node_pool" "primary_preemptible_nodes" {
-  name       = "my-node-pool"
+resource "google_container_node_pool" "bigpool" {
+  name       = "my-bigpool-pool"
   location   = "us-central1-b"
   cluster    = "${google_container_cluster.reddit_cluster.name}"
   node_count = 2
 
   node_config {
     preemptible  = true
-    machine_type = "n1-standard-1"
+    machine_type = "n1-standard-2"
+
+    metadata = {
+      disable-legacy-endpoints = "true"
+    }
+
+    oauth_scopes = [
+      "https://www.googleapis.com/auth/logging.write",
+      "https://www.googleapis.com/auth/monitoring",
+    ]
+  }
+}
+resource "google_container_node_pool" "smallpool" {
+  name       = "my-smallpool-pool"
+  location   = "us-central1-b"
+  cluster    = "${google_container_cluster.reddit_cluster.name}"
+  node_count = 2
+
+  node_config {
+    preemptible  = true
+    machine_type = "g1-small"
 
     metadata = {
       disable-legacy-endpoints = "true"
