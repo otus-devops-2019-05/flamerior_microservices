@@ -1,0 +1,12 @@
+dependencies:
+- name: fluentd
+  repository: file://../fluentd
+  version: 0.1.0
+- name: elasticsearch
+  repository: file://../elasticsearch
+  version: 0.1.0
+- name: kibana
+  repository: file://../kibana
+  version: 0.1.0
+digest: sha256:cef0fb987c31e4835149032d51af924c0d787244410702aa164eff808d83c008
+generated: 2019-11-18T23:49:36.353425609+07:00
