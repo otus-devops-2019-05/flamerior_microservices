@@ -24,7 +24,7 @@ resource "google_container_node_pool" "bigpool" {
   name       = "my-bigpool-pool"
   location   = "us-central1-b"
   cluster    = "${google_container_cluster.reddit_cluster.name}"
-  node_count = 1
+  node_count = 2
 
   node_config {
     preemptible  = true
