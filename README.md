@@ -19,7 +19,7 @@ docker-machine create --driver google  --google-machine-image ubuntu-os-cloud/gl
 
 подключен тревис и оповещения в слак 
 
-##12) 
+##13) 
 
 выполнены основные задания и задания со * 
 
@@ -45,7 +45,7 @@ flamerior/comment                                       1.0                 154M
 заодно разобрался с форматированием вывода команд докера
 ```docker images --format 'table {{.Repository}}\t{{.Tag}}\t{{.Size}} ' -f "reference=flamerior/*:*"```
 
-##13)
+##14)
 поэксперементировал с сетями 
 реализовал docker-compose и docker-compose.override 
 проверил что доступно изменение кода без перезапуска
@@ -53,14 +53,14 @@ flamerior/comment                                       1.0                 154M
 приложение доступно на 80 м порту после docker-compose up -d
 
 
-##14) 
+##15) 
 терраформом создаются инстанс гитлаба, дев сервер и несколько раннеров 
 ансиблом раскатывается докер и настраиваются ранеры (сначала необходимо задействовать инициализацию гитлаба, а уже потом ввести токен и ип для инициализации ранеров)
 настроил пайплайн для запуска теста в докере на ранере и для деплоя на дев сервер
 использовал переменные среды гитлаба для хранения логина пароля докер хаба и приватного ключа доступа к дев серверу
 
 
-## 15)
+## 16)
 - запустил prometheus и настроил докерфайл
 - помучал метрики 
 - написал композ и добавил в него сервисы и экспортеры
@@ -79,7 +79,7 @@ docker push flamerior/mongodb-exporter
 - запушил образы
 https://cloud.docker.com/u/flamerior/repository/list
 
-## 16)
+## 17)
 - поднял графану 
 - поигрался с дашбордами
 - настроил подхватывание источников и дашбордов на старте
@@ -116,7 +116,7 @@ sudo bash install-logging-agent.sh --structured
 - настроил простейший вариант autoheal для ui - пришлось добавить curl в контейнер чтобы работало
 
 
-## 17)
+## 18)
 
 - настроил efk
 - решил проблему  max virtual memory для еластика через sudo sysctl -w vm.max_map_count=262144
@@ -126,7 +126,7 @@ sudo bash install-logging-agent.sh --structured
 - нашел ошибку в коде с помощью трейсинга - стояла задержка 3 секунды 
 
 
-## 18)
+## 19)
 - прошел The Hard Way
 - использовал tmux (для открытия 3х консолей на контроллеры использовать команду)
 ```bash
@@ -160,7 +160,7 @@ kubectl get all
 ```
 
 
-##19)
+##20)
 - поставил миникуб
 - создал кластер в GKE
 - создал кластер в GKE через терраформ
@@ -183,7 +183,7 @@ kubectl -n dev get services
 ```
 
 
-##20)
+##21)
 - помучал kube-dns
 - настроил гугловый лоад балансер
 - настроил ingress
@@ -196,4 +196,34 @@ kubectl -n dev get services
 - создал PersistentVolume
 - настроил PersistentVolumeClaim
 - создал StorageClass fast
-- подклчил его к монге
+- подключил его к монге
+
+##22)
+
+- развернул прометей
+- настроил релабел
+- cadvisor
+- node-exporter
+- метрики приложения
+- разбил на job-ы post-endpoints, commentendpoints, ui-endpoints
+- поднял графану через helm подсунув источник данных и дашборды в чарт
+- настроил переменную в графане для namespace кубера в дашбордах метрик приложения
+- запустил alertmanager для аписервера и хостов k8s
+- установил prometheus-operator через чарт и прописал в нем манифест 
+```
+
+  additionalServiceMonitors:
+    - name: post-component
+      selector:
+        matchLabels:
+          component: post
+      namespaceSelector:
+        any: true
+      endpoints:
+        - targetPort: 5000
+          interval: 30s
+          path: /metrics
+          scheme: http
+```
+- добавил лабел мощным нодам
+- завернул в один чарт *efk* развертывание логирования (fluentd elastic kibana отдельные чарты тоже лежат в папке charts требуется namespace logging)
